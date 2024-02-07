@@ -1,0 +1,67 @@
+// In Java: 
+
+import java.util.*;
+public class HW1 {
+  public static void main(String[] args) {
+    String s = "A%bcd   %%%   cBa";
+    String result="";
+    Boolean palindrome = true;
+
+    for (int i = 0; i < s.length(); i++) {
+      if(Character.isLetter(s.charAt(i))){
+        result = result + Character.toLowerCase(s.charAt(i));
+      }
+    }
+
+    for (int i = 0; i < result.length(); i++) {
+      if (result.charAt(i) != result.charAt(result.length()-i-1)){
+        palindrome = false;
+        break;
+      }
+    }
+    System.out.println(palindrome);
+  }
+}
+
+// In Python: 
+
+def is_palindrome(s):
+    cleaned_s = ''
+    
+    # Convert to lowercase and remove non-alphanumeric characters
+    for char in s:
+        if char.isalnum():
+            cleaned_s += char.lower()
+    
+    # Check for palindrome
+    palindrome = True
+    for i in range(len(cleaned_s) // 2):
+        if cleaned_s[i] != cleaned_s[len(cleaned_s) - i - 1]:
+            palindrome = False
+            break
+    
+    return palindrome
+
+# Test the function
+s = "A%bcd   %%%   cBa"
+print(is_palindrome(s))  
+
+
+/*
+# Palindrome Checker
+The goal of the problem is to determine whether a given string is a palindrome after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters.
+
+## Approach
+1. **Conversion to Lowercase and Removing Non-Alphanumeric Characters**:
+   - Iterate through the input string `s`.
+   - For each character, check if it is a letter using `Character.isLetter()`.
+   - If it is a letter, convert it to lowercase using `Character.toLowerCase()` and append it to the `result` string.
+   - Skip non-alphanumeric characters.
+
+2. **Palindrome Check**:
+   - Iterate through the cleaned string `result`.
+   - Compare characters from both ends of the string towards the middle.
+   - If any pair of characters do not match, the string is not a palindrome.
+   - Continue comparison until reaching the middle of the string.
+   - If all pairs match, the string is a palindrome.
+ */
