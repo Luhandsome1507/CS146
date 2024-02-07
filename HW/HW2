@@ -1,1 +1,77 @@
+// In Java:
 
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Main main = new Main();
+        String [] version = {"KluKlu", "KLUK", "KKlluu", "KLUKLU", "LUK1KlU", "0K0L0U1K"};
+        String first= main.firstBadVersion(version);
+        System.out.println("First bad version: "+ first);
+    }
+    private static boolean isBadVersion(String version) {
+        for (char c : version.toCharArray()) {
+            if (Character.isDigit(c)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public String firstBadVersion(String[] versions) {
+        int left = 0;
+        int right = versions.length - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (isBadVersion(versions[mid])) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return versions[left];
+    }
+}
+
+//In Python:
+
+class Main:
+    def __init__(self):
+        pass
+
+    def isBadVersion(self, version):
+        for c in version:
+            if c.isdigit():
+                return True
+        return False
+
+    def firstBadVersion(self, versions):
+        left = 0
+        right = len(versions) - 1
+        
+        while left <= right:
+            mid = left + (right - left) // 2
+            if self.isBadVersion(versions[mid]):
+                right = mid - 1
+            else:
+                left = mid + 1
+        
+        return versions[left]
+
+if __name__ == "__main__":
+    solution = Main()
+    versions = ["KluKlu", "KLUK", "KKlluu", "KLUKLU", "LUK1KlU", "0K0L0U1K"]
+    first_bad_version = solution.firstBadVersion(versions)
+    print("First bad version:", first_bad_version)
+
+
+/*
+# Finding the First Bad Version
+
+## Problem Statement
+We are given an array of version strings, where the bad version is defined as a string containing a number. The task is to find the first bad version in the array.
+
+## High-Level Approach
+### Binary Search
+To efficiently find the first bad version in the array of strings, we use a binary search approach.
+*/
