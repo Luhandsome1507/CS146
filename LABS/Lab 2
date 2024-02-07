@@ -1,0 +1,48 @@
+// In Java: 
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        String s = "fired";
+        String t = "fried";
+
+        if (s.length() != t.length()) {
+            System.out.println(false);
+        } else {
+            char[] sChars = s.toCharArray();
+            char[] tChars = t.toCharArray();
+
+            Arrays.sort(sChars);
+            Arrays.sort(tChars);
+
+            System.out.println(Arrays.equals(sChars, tChars));
+        }
+    }
+}
+
+// In Python: 
+
+s = "fired"
+t = "fried"
+
+if len(s) != len(t):
+    print(False)
+else:
+    s_chars = sorted(s)
+    t_chars = sorted(t)
+    print(s_chars == t_chars)
+
+
+/*
+# Anagram Checker
+## Problem Statement
+Given two strings `s` and `t`, we need to determine whether they are anagrams of each other.
+
+## High-Level Approach
+### 1. Length Comparison
+First, we compare the lengths of the two strings. If they are not equal, they cannot be anagrams. If the lengths are equal, we proceed with further comparison.
+### 2. Sorting Approach
+Next, we convert both strings into lists of characters and sort them. This ensures that if the strings are anagrams, they will have the same characters in the same order after sorting.
+### 3. Equality Check
+Finally, we compare the sorted lists. If they are equal, it means the strings are anagrams; otherwise, they are not.
+*/
