@@ -1,0 +1,57 @@
+---- Problem 1-----
+# Time Complexity Analysis for Insertion Sort
+
+## Overview
+Insertion Sort is a simple sorting algorithm that iterates through an array, repeatedly taking each element and inserting it into its correct position relative to the already sorted elements.
+
+## Time Complexity
+- **Best Case:** O(n)
+- **Average Case:** O(n^2)
+- **Worst Case:** O(n^2)
+
+## Explanation
+- **Best Case (O(n)):** Occurs when the array is already sorted. In this case, Insertion Sort only requires one comparison per element to determine its correct position, resulting in linear time complexity.
+- **Average Case (O(n^2)):** In the average case, each element must be compared with every other element in the sorted portion of the array, resulting in quadratic time complexity.
+- **Worst Case (O(n^2)):** Occurs when the array is sorted in reverse order. In this case, each element must be compared and shifted to its correct position in every iteration of the outer loop, resulting in quadratic time complexity.
+
+## Conclusion
+Insertion Sort is efficient for small datasets or nearly sorted arrays but becomes inefficient for larger datasets due to its quadratic time complexity. 
+It is not recommended for sorting large arrays or datasets with unknown distributions.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------'
+------Problem 2-----------
+
+MATRIX_MULTIPLY(A, B): 
+  if columns(A) ≠ rows(B): 
+    raise ValueError("Matrix multiplication is not defined.") 
+
+  rows_A ← number of rows in A 
+  cols_A ← number of columns in A 
+  cols_B ← number of columns in B 
+  result ← matrix of size rows_A x cols_B filled with zeros 
+
+  for i from 1 to rows_A do: 
+    for j from 1 to cols_B do: 
+    sum ← 0 
+      for k from 1 to cols_A do: 
+        sum ← sum + A[i][k] * B[k][j] 
+      result[i][j] ← sum return result
+
+# Time Complexity Analysis for Matrix Multiplication
+
+## Overview
+Matrix multiplication is a fundamental operation in linear algebra, where two matrices are multiplied to produce a third matrix. The provided pseudocode implements matrix multiplication for matrices A and B.
+
+## Time Complexity
+- **Naive Algorithm:** O(n^3)
+
+## Explanation
+- **Naive Algorithm (O(n^3)):** This algorithm involves three nested loops, each iterating over the rows and columns of matrices A and B. 
+For each element of the resulting matrix, a dot product of a row of A and a column of B is computed. As a result, the time complexity is cubic.
+
+## Conclusion
+Matrix multiplication is a computationally intensive operation, especially for large matrices.  
+The choice of algorithm depends on the size of the matrices and the specific requirements of the application.
+
+
