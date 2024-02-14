@@ -1,1 +1,74 @@
+//Problem 1: 
+
+For insertion sort,
+ The best case, average case, and worst case scenarios are as follows:
+
+--Best case: The best case occurs when the input array is already sorted in ascending order. 
+In this case, the algorithm only performs one comparison per iteration and no shifts. 
+Therefore, the time complexity is O(n), where n is the size of the array.
+
+--Average case: The average case occurs when the input array is randomly ordered. 
+In this case, the algorithm performs n/2 comparisons and n/4 shifts per iteration on average. 
+Therefore, the time complexity is O(n^2).
+
+--Worst case: The worst case occurs when the input array is sorted in descending order. 
+In this case, the algorithm performs n comparisons and n shifts per iteration. 
+Therefore, the time complexity is O(n^2).
+
+-------------------------------------------------------------------------------
+
+//Problem 2:
+----------------------
+MATRIX_MULTIPLY(A, B): 
+  if columns(A) ≠ rows(B): 
+    raise ValueError("Matrix multiplication is not defined.") 
+
+  rows_A ← number of rows in A 
+  cols_A ← number of columns in A 
+  cols_B ← number of columns in B 
+  result ← matrix of size rows_A x cols_B filled with zeros 
+
+  for i from 1 to rows_A do: 
+    for j from 1 to cols_B do: 
+    sum ← 0 
+      for k from 1 to cols_A do: 
+        sum ← sum + A[i][k] * B[k][j] 
+      result[i][j] ← sum return result
+
+---------------------
+--Time Complexity Analysis:
+The time complexity of the matrix multiplication algorithm mainly depends on the dimensions of the input matrices. 
+Let's break down the time complexity for different cases:
+
+***Best Case:
+The best-case scenario occurs when the matrices are square and of the same dimensions.
+In this case, the algorithm iterates through each element of the resulting matrix once, performing a constant number of operations (summing the products of corresponding elements).
+Thus, the time complexity is linear in the number of elements of the resulting matrix.
+Time complexity: O(n^2), where n is the number of rows or columns of the square matrices.
+
+****Average Case:
+For the average case, we consider general input matrices with arbitrary dimensions.
+In this case, the time complexity is dominated by the three nested loops iterating over the rows and columns of the matrices.
+Each element of the resulting matrix requires a constant number of operations (summing the products of corresponding elements).
+Thus, the overall time complexity is cubic in the size of the matrices.
+Time complexity: O(n^3), where n is the number of rows or columns of the input matrices.
+
+***Worst Case:
+The worst case occurs when the input matrices are large and have significantly different dimensions.
+Similar to the average case, the time complexity is dominated by the three nested loops.
+The worst case scenario typically arises when the matrices are of vastly different sizes, resulting in more iterations and operations.
+Time complexity: O(n^3), where n is the number of rows or columns of the input matrices.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
