@@ -1,1 +1,38 @@
+// In Java:
 
+public class Fibonacci {
+  public static void main(String[] args) {
+    int n = 8;
+    if (n == 0)
+      System.out.println(0);
+    else if (n == 1 || n == 2)
+      System.out.println(1);
+    else {
+      int a = 1, b = 1, fib = 0;
+      for (int i = 3; i <= n; i++) {
+        fib = a + b;
+        a = b;
+        b = fib;
+      }
+      System.out.println(fib);
+    }
+  }
+}
+-----------------------------------------
+// In Python: 
+
+def fibonacci(n):
+    if n == 0:
+        return 0
+    elif n == 1 or n == 2:
+        return 1
+    else:
+        a, b = 1, 1
+        for i in range(3, n + 1):
+            fib = a + b
+            a = b
+            b = fib
+        return fib
+
+n = 8
+print(fibonacci(n))
