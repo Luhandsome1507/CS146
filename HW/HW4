@@ -36,27 +36,28 @@ MATRIX_MULTIPLY(A, B):
       result[i][j] ← sum return result
 
 ---------------------
+
 --Time Complexity Analysis:
 The time complexity of the matrix multiplication algorithm mainly depends on the dimensions of the input matrices. 
 Let's break down the time complexity for different cases:
 
-***Best Case:
+***Best Case:O(rows_A×cols_B×cols_A)
 The best-case scenario occurs when the matrices are square and of the same dimensions.
 In this case, the algorithm iterates through each element of the resulting matrix once, performing a constant number of operations (summing the products of corresponding elements).
 Thus, the time complexity is linear in the number of elements of the resulting matrix.
-Time complexity: O(n^2), where n is the number of rows or columns of the square matrices.
+Time complexity: O(n^3), where n is the number of rows or columns of the square matrices.
 
-****Average Case:
+****Average Case:O(rows_A×cols_B×cols_A)
 For the average case, we consider general input matrices with arbitrary dimensions.
 In this case, the time complexity is dominated by the three nested loops iterating over the rows and columns of the matrices.
 Each element of the resulting matrix requires a constant number of operations (summing the products of corresponding elements).
 Thus, the overall time complexity is cubic in the size of the matrices.
 Time complexity: O(n^3), where n is the number of rows or columns of the input matrices.
 
-***Worst Case:
+***Worst Case:O(rows_A×cols_B×cols_A)
 The worst case occurs when the input matrices are large and have significantly different dimensions.
 Similar to the average case, the time complexity is dominated by the three nested loops.
-The worst case scenario typically arises when the matrices are of vastly different sizes, resulting in more iterations and operations.
+The worst-case scenario typically arises when the matrices are of vastly different sizes, resulting in more iterations and operations.
 Time complexity: O(n^3), where n is the number of rows or columns of the input matrices.
 
 
