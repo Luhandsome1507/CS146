@@ -1,0 +1,44 @@
+//Problem 1:
+For each of the following, just write which function is asymptotically greater.
+(Log(AB) = Log A + Log B)
+  (Log (A^b) = b*Log A)
+
+1. 10000000000n2 vs n3   ⇒   n^3 because n^3 is always greater than n^2
+
+2. n^2*log(n) vs n(log(n))^10 ⇒ n^2*log(n) because: 
+		log(n^2) +log(Log n)  	Log n + Log((Log n)^10)    (Log(AB) = Log A + Log B)
+		-> 2 Log n + 1	         	Log n + 1^10
+		->	         2 Log n > Log n	
+
+3. n^logn vs 2 ^ (sqrt n) ⇒ 		2^ (sqrt n) because:		
+		-> Log n * (Log n) 	      sqrt(n)*Log 2 
+		-> Log ( Log n)^2)	      Log (sqrt n) + Log( log 2)
+		-> 2 * Log ( Log n)   <	   Log ( n ^ 1/2) + LogLog 2
+				                 	    (½ * Log n)
+					
+4. 2^n vs 2^2n ⇒ 2^ 2n   because 2n is greater than n
+-------------------------------------
+-------------------------------------
+//Problem 2:
+
+Now let's examine some [pseudo]code and apply asymptotic notation to it. 
+isPrime(n):
+ for(i = 2, i*i <= n; i++) {
+   if(n % x == 0) {
+     return false
+   }
+ return true
+
+//
+***Best Case Time Complexity:
+The best case scenario occurs when n is 2, the smallest prime number.
+
+***Worst Case Time Complexity:
+The worst case occurs when n is a prime number or the product of two large prime numbers.
+In such cases, the loop continues until i is greater than the square root of n.
+Therefore, Worst Case Time Complexity: O(√n)
+
+***
+Average Case Time Complexity:
+The average case time complexity for the isPrime(n) function is often considered closer to the worst case, O(√n), 
+because it involves checking divisibility up to the square root of n for many numbers.
