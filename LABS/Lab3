@@ -8,15 +8,15 @@ For each of the following, just write which function is asymptotically greater.
 2. n^2*log(n) vs n(log(n))^10 ⇒ n^2*log(n) because: 
 		log(n^2) +log(Log n)  	Log n + Log((Log n)^10)    (Log(AB) = Log A + Log B)
 		-> 2 Log n + 1	         	Log n + 1^10
-		->	         2 Log n > Log n	
+		->	      2 Log n > Log n	
 
-3. n^logn vs 2 ^ (sqrt n) ⇒ 		2^ (sqrt n) because:		
+3. n^logn vs 2 ^ (sqrt n) ⇒ 	2^ (sqrt n) because:		
 		-> Log n * (Log n) 	      sqrt(n)*Log 2 
 		-> Log ( Log n)^2)	      Log (sqrt n) + Log( log 2)
 		-> 2 * Log ( Log n)   <	   Log ( n ^ 1/2) + LogLog 2
-				                 	    (½ * Log n)
+				          (½ * Log n)
 					
-4. 2^n vs 2^2n ⇒ 2^ 2n   because 2n is greater than n
+4. 2^n vs 2^2n ⇒ Both are asymptotically equal because both are asymptotically equivalent to O(2^n)
 -------------------------------------
 -------------------------------------
 //Problem 2:
