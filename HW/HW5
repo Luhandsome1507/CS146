@@ -1,1 +1,38 @@
+//Problem 1: 
+For each of the following recurrences, verify the answer you get by applying the master method, by solving the recurrence algebraically
+1. T(N) = 2T(N-1) + 1 
+We have a=2, b= 1, k=0 and f(n)=O(n^k) => T(n)= O(n^k * a^(n/b)) = O(2^n);
 
+2. T(N) = 3T(N-1) + n
+We have a=3, b=1, k=1 => T(n) = O(n^1 * a^(n/1)) = O(n*3^n);
+
+3. T(N) = 9T(N/2) + n^2
+We have a=9, b=2, f(n) = n^2 => T(n) = theta(n^ log(b)a) = theta(n^log(2)9)
+
+4. T(N) = 100T(N/2) + n^(log(2)cn + 1)  (c is a constant)
+We have a = 100, b = 2,f(n) = n^(log(2)cn + 1) => T(n)= theta(n^(log(2)cn + 1));
+
+5. T(N) = 4T(N/2) + n^2 * logn
+We have a = 4, b = 2, f(n) = n^2*log(n) => T(n)= theta(n^2*log2(n));
+
+6. T(N) = 5T(N/2) + n^2/logn
+We have a = 5, b =2, f(n) = n^2/logn =n^2 * (logn)^-1, because k<0
+=> can not apply Master Theorem, so that T(n) does not exist!
+
+------------------------------------------------------------
+============================================================
+//Problem 2:
+Below is some pseudocode. Come up with a recurrence relation, and solve that recurrence relation using any method of your choice.  
+*****************
+yetAnotherFunc(n):           T(N)
+  if n > 1:                   1
+    for(i=0;i<10n;i++)        N+1
+      doSomething;            N
+    yetAnotherFunc(n/2);      T(N/2)
+    yetAnotherFunc(n/2);      T(N/2)
+***********************
+
+As we can see, the recurrence relation that represents the time complexity of yetAnotherFunc(n) is:
+T(N) = 2T(N/2) + 2N + 2 = 2T(N/2) + N
+Applying the Master Theorem, we can reduce T(N):
+We have a=2, b=2, and f(n)=theta(n) => T(N) = theta(n*logn);
