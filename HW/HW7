@@ -1,1 +1,83 @@
+// In Java: 
+***********************************
+import java.util.*;
+
+public class Main {
+    public int minMeetingRooms(int[][] intervals) {
+        int[] start = new int[intervals.length];
+        int[] end = new int[intervals.length];
+
+        for (int i = 0; i < intervals.length; i++) {
+            start[i] = intervals[i][0];
+            end[i] = intervals[i][1];
+        }
+        Arrays.sort(start);
+        Arrays.sort(end);
+        int startPointer = 0, endPointer = 0;
+        int roomsNeeded = 0;
+        while (startPointer < intervals.length) {
+            if (start[startPointer] < end[endPointer]) {
+                roomsNeeded++;
+            } else {
+                endPointer++;
+            }
+            startPointer++;
+        }
+
+        return roomsNeeded;
+    }
+
+    public static void main(String[] args) {
+        Main solution = new Main();
+        int[][] interval = {{0, 20}, {20, 30}, {15,30}};
+        System.out.println(solution.minMeetingRooms(interval));
+
+    }
+}
+********************************
+----------------------------------------------
+----------------------------------------------
+
+// In Python: 
+***************************
+from typing import List
+
+class Main:
+    def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+        start = sorted([i[0] for i in intervals])
+        end = sorted([i[1] for i in intervals])
+        startPointer, endPointer = 0, 0
+        roomsNeeded = 0
+        
+        while startPointer < len(intervals):
+            if start[startPointer] < end[endPointer]:
+                roomsNeeded += 1
+            else:
+                endPointer += 1
+            startPointer += 1
+            
+        return roomsNeeded
+
+# Example usage
+solution = Main()
+intervals = [[0, 20], [20, 30], [15, 30]]
+print(solution.minMeetingRooms(intervals))
+*****************************
+
+## Approach
+
+The solution involves sorting and iteration techniques to efficiently calculate the minimum number of servers needed.
+
+### Steps:
+1. **Separate and Sort Times:**
+2. **Iterate with Two Pointers:**
+3. **Allocate Servers:**
+4. **Result:**
+   - The total number of required servers is the maximum count reached during the iteration, representing the peak concurrent job load.
+
+## Complexity Analysis
+
+- **Time Complexity:** O(n log n), where n is the number of jobs. 
+The sorting of start and end times dominates the time complexity.
+- **Space Complexity:** O(n) for storing the sorted start and end times.
 
