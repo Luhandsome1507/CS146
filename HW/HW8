@@ -1,0 +1,89 @@
+//In Java:
+
+public class Main {
+    public int longestPalindrome(String s) {
+        int[] charCounts = new int[128]; 
+        for (char c : s.toCharArray()) {
+            charCounts[c]++;
+        }
+
+        int maxLength = 0;
+        boolean oddCountFound = false;
+        for (int count : charCounts) {
+            if (count % 2 == 0) {
+                maxLength += count;
+            } else {
+                maxLength += count - 1;
+                oddCountFound = true;
+            }
+        }
+
+        if (oddCountFound) {
+            maxLength++;
+        }
+
+        return maxLength;
+    }
+
+    public static void main(String[] args) {
+        Main sol = new Main();
+
+        String s1 = "abccccdd";
+        System.out.println(sol.longestPalindrome(s1)); // Output: 7
+
+        String s2 = "speediskey";
+        System.out.println(sol.longestPalindrome(s2)); // Output: 5
+    }
+}
+---------------------------------------------\
+----------------------------------------------\
+//In Python:
+class __main__:
+    def longestPalindrome(self, s: str) -> int:
+        char_counts = {}
+        for char in s:
+            if char in char_counts:
+                char_counts[char] += 1
+            else:
+                char_counts[char] = 1
+        
+        length = 0
+        odd_found = False
+        for count in char_counts.values():
+            if count % 2 == 0:
+                length += count
+            else:
+                length += count - 1
+                odd_found = True
+        
+        if odd_found:
+            length += 1
+        
+        return length
+
+if __name__ == "__main__":
+    solution = __main__()
+    
+    # Test case 
+    s1 = "abccccdd"
+    print(f"Input: s = \"{s1}\"")
+    print(f"Output: {solution.longestPalindrome(s1)}")
+
+************************
+***********************
+
+# Longest Palindrome Construction
+
+## Approach
+The solution to this problem involves counting the occurrences of each character in the string and then using these counts to determine the maximum length of a palindrome that can be constructed. 
+The steps can be broken down as follows:
+
+### Step 1: Count Character Occurrences
+### Step 2: Calculate Palindrome Length
+### Step 3: Add Central Character for Odd Counts
+
+## Conclusion
+By efficiently counting the character occurrences and applying the rules for even and odd counts,
+we can determine the length of the longest palindrome that can be built. 
+This approach is effective and works within the given constraints of the problem.
+
