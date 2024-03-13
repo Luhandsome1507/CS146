@@ -1,0 +1,97 @@
+In Java: 
+******************
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+public class lab4 {
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        invertTree(root.left);
+        invertTree(root.right);
+        return root;
+    }
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(8);
+        root.left.left = new TreeNode(3);
+        root.left.right = new TreeNode(4);
+        root.right.left = new TreeNode(5);
+        root.right.right = new TreeNode(6);
+
+        lab4 solution = new lab4();
+        root = solution.invertTree(root);
+        printTree(root);
+    }
+
+    public static void printTree(TreeNode root) {
+        if (root != null) {
+            printTree(root.left);
+            System.out.println(root.val);
+            printTree(root.right);
+        }
+    }
+}
+*********************
+----------------------------------------------------------
+----------------------------------------------------------
+
+In Python:
+*********************
+class TreeNode(object):
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def invertTree(root):
+    if root is None:
+        return None
+    root.left, root.right = root.right, root.left
+    invertTree(root.left)
+    invertTree(root.right)
+    return root
+
+root = TreeNode(1)
+root.left = TreeNode(2)
+root.right = TreeNode(8)
+root.left.left = TreeNode(3)
+root.left.right = TreeNode(4)
+root.right.left = TreeNode(5)
+root.right.right = TreeNode(6)
+
+inverted_root = invertTree(root)
+***********************
+--------------------------------------------------------
+-------------------------------------------------------
+
+# Inverting a Binary Tree
+## Problem Statement
+Given the root of a binary tree, the objective is to invert the tree and return the new root.
+## High-Level Approach
+The inversion of a binary tree means that for every node in the tree, its left and right children are swapped. 
+This process is applied recursively to all nodes in the tree.
+
+### Recursive Approach
+
+1. Swap the left and right child nodes of the current node.
+2. Recursively call the invert function on the left child.
+3. Recursively call the invert function on the right child.
+
+
+
