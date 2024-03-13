@@ -1,0 +1,85 @@
+In Python: 
+***********************
+class TreeNode(object):
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def isValidBST(root):
+    def helper(node, lower=float('-inf'), upper=float('inf')):
+        if not node:
+            return True
+        val = node.val
+        if val <= lower or val >= upper:
+            return False
+        if not helper(node.right, val, upper):
+            return False
+        if not helper(node.left, lower, val):
+            return False
+        return True
+
+    return helper(root)
+
+# Test cases
+root1 = TreeNode(4, TreeNode(3, TreeNode(1)), TreeNode(8, TreeNode(5), TreeNode(9)))
+root2 = TreeNode(1, TreeNode(2, TreeNode(3), TreeNode(4)), TreeNode(8, TreeNode(5), TreeNode(6)))
+
+print(isValidBST(root1))  # Expected output: True
+print(isValidBST(root2))  # Expected output: False
+**************************
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+
+In Java:
+**********************
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+public class lab5 {
+    public boolean isValidBST(TreeNode root) {
+        return validate(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+    
+    private boolean validate(TreeNode node, long lower, long upper) {
+        if (node == null) return true;
+        if (node.val <= lower || node.val >= upper) return false;
+        return validate(node.left, lower, node.val) && validate(node.right, node.val, upper);
+    }
+    
+    public static void main(String[] args) {
+        TreeNode root1 = new TreeNode(4, new TreeNode(3, new TreeNode(1), null), new TreeNode(8, new TreeNode(5), new TreeNode(9)));
+        TreeNode root2 = new TreeNode(1, new TreeNode(2, new TreeNode(3), new TreeNode(4)), new TreeNode(8, new TreeNode(5), new TreeNode(6)));
+        
+        lab5 solution = new lab5();
+        System.out.println(solution.isValidBST(root1));  // Expected output: True
+        System.out.println(solution.isValidBST(root2));  // Expected output: False
+    }
+}
+-----------------------------------------------------------
+-----------------------------------------------------------
+# BST Validation Approach
+
+## Overview
+To validate a binary search tree (BST), we ensure each node's key is greater than all keys in its left subtree and less than all keys in its right subtree.
+
+## Method
+- We use recursion to traverse the tree.
+- Each node is checked against a range of valid values.
+- Left child calls narrow the range to below the parent node's value.
+- Right child calls raise the range to above the parent node's value.
+- The recursion ends when we either find an invalid node or check all nodes successfully.
+
+## Conclusion
+This approach effectively verifies the BST property across the entire tree with a simple recursive function.
+
