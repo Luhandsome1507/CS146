@@ -1,0 +1,81 @@
+1. **Convert an Adjacency List to an Adjacency Matrix:**
+   Pseudocode:
+   ************************
+   function listToMatrix(adjList):
+       Initialize matrix with size N x N with all zeros, where N is the number of vertices
+       for each vertex u in adjList:
+           for each vertex v in adjList[u]:
+               matrix[u][v] = 1
+       return matrix
+   ************************
++Explanation:
+   We initialize an N x N matrix with zeros, where N is the number of vertices in the graph. 
+   For each vertex u, we look at its adjacency list and for each vertex v in this list, we set the corresponding cell in the matrix (u,v) to 1 to indicate an edge from u to v.
+
+   Python Implementation:
+   *************************
+   def list_to_matrix(adj_list):
+       n = len(adj_list)
+       matrix = [[0] * n for _ in range(n)]
+       for u in range(n):
+           for v in adj_list[u]:
+               matrix[u][v] = 1
+       return matrix
+   **************************
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+
+2. **Convert an Adjacency Matrix to an Adjacency List:**
+   Pseudocode:
+   **************************
+   function matrixToList(matrix):
+       Initialize an empty list, adjList, with N empty lists
+       for i from 0 to N-1:
+           for j from 0 to N-1:
+               if matrix[i][j] == 1:
+                   adjList[i].append(j)
+       return adjList
+   ***************************
++Explanation:
+   We initialize an empty list of lists, where each inner list will hold the adjacent vertices.
+   We iterate over the matrix, and whenever we find a 1 at matrix[i][j], we append j to the adjacency list of vertex i.
+
+   Python Implementation:
+   ****************************
+   def matrix_to_list(matrix):
+       n = len(matrix)
+       adj_list = [[] for _ in range(n)]
+       for i in range(n):
+           for j in range(n):
+               if matrix[i][j] == 1:
+                   adj_list[i].append(j)
+       return adj_list
+   ****************************
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+
+
+3. **Reverse the Direction of Each Edge in a Directed Graph:**
+   Pseudocode:
+   ************************
+   function reverseGraph(adjList):
+       Initialize an empty list, reversedList, with N empty lists
+       for each vertex u in adjList:
+           for each vertex v in adjList[u]:
+               reversedList[v].append(u)
+       return reversedList
+   *************************
++Explanation:
+   We create a new adjacency list, reversedList, with the same number of vertices. 
+   For each edge (u,v) in the original graph, we add an edge (v,u) in the reversedList.
+
+   Python Implementation:
+   *************************
+   def reverse_graph(adj_list):
+       n = len(adj_list)
+       reversed_list = [[] for _ in range(n)]
+       for u in range(n):
+           for v in adj_list[u]:
+               reversed_list[v].append(u)
+       return reversed_list
+   **************************
