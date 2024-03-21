@@ -1,0 +1,111 @@
+In java:
+****************
+public class Main {
+
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        if (image[sr][sc] == newColor) return image;
+        fill(image, sr, sc, image[sr][sc], newColor);
+        return image;
+    }
+
+    private void fill(int[][] image, int sr, int sc, int color, int newColor) {
+        if (sr < 0 || sr >= image.length || sc < 0 || sc >= image[0].length || image[sr][sc] != color) {
+            return;
+        }
+
+        image[sr][sc] = newColor;
+        fill(image, sr + 1, sc, color, newColor);
+        fill(image, sr - 1, sc, color, newColor);
+        fill(image, sr, sc + 1, color, newColor);
+        fill(image, sr, sc - 1, color, newColor);
+    }
+
+    public static void main(String[] args) {
+        Main solution = new Main();
+
+        // Test case 1
+        int[][] image1 = {{1,1,1},{1,1,0},{1,0,1}};
+        int sr1 = 1, sc1 = 1, newColor1 = 2;
+        image1 = solution.floodFill(image1, sr1, sc1, newColor1);
+        printImage(image1);
+
+        // Test case 2
+        int[][] image2 = {{0,0,0},{0,0,0}};
+        int sr2 = 0, sc2 = 0, newColor2 = 0;
+        image2 = solution.floodFill(image2, sr2, sc2, newColor2);
+        printImage(image2);
+    }
+
+    private static void printImage(int[][] image) {
+        for (int[] row : image) {
+            for (int pixel : row) {
+                System.out.print(pixel + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+}
+
+-------------------------------------------------------------
+
+In Python:
+**************
+class Main:
+    def floodFill(self, image, sr, sc, new_color):
+        original_color = image[sr][sc]
+        if original_color == new_color:
+            return image
+        self.fill(image, sr, sc, original_color, new_color)
+        return image
+
+    def fill(self, image, sr, sc, color, new_color):
+        # If the current pixel's color is not the one we need to change, return.
+        if sr < 0 or sr >= len(image) or sc < 0 or sc >= len(image[0]) or image[sr][sc] != color:
+            return
+        # Change the color of the current pixel.
+        image[sr][sc] = new_color
+        # Recursively call fill for the four neighboring pixels.
+        self.fill(image, sr + 1, sc, color, new_color)
+        self.fill(image, sr - 1, sc, color, new_color)
+        self.fill(image, sr, sc + 1, color, new_color)
+        self.fill(image, sr, sc - 1, color, new_color)
+
+# Example usage:
+solution = Main()
+
+# Test case 1
+image1 = [[1, 1, 1], [1, 1, 0], [1, 0, 1]]
+sr1, sc1, new_color1 = 1, 1, 2
+filled_image1 = solution.floodFill(image1, sr1, sc1, new_color1)
+print(filled_image1)
+
+# Test case 2
+image2 = [[0, 0, 0], [0, 0, 0]]
+sr2, sc2, new_color2 = 0, 0, 0
+filled_image2 = solution.floodFill(image2, sr2, sc2, new_color2)
+print(filled_image2)
+
+
+-------------------------------------------------------------
+------------------------------------------------------------
+# Flood Fill Algorithm Explanation
+
+## Overview
+The flood fill algorithm is used to change the color of a contiguous region of pixels in an image. It starts at a given pixel and changes the color of that pixel and all adjacent pixels that have the same original color.
+
+## Approach
+To solve the flood fill problem, a recursive strategy is employed. The steps are as follows:
+
+1. **Identify the Starting Point**: 
+
+2. **Check for Base Cases**: 
+
+3. **Color the Pixel**: 
+
+4. **Recursive Fill**:
+
+5. **Stopping Condition**:
+
+###Conclusion
+The flood fill algorithm is a classic example of a recursive approach to solve a problem by breaking it down into simpler sub-problems.
