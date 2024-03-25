@@ -1,0 +1,312 @@
+Red-Black Tree Implementation in Java:
+*****************************
+class Node {
+    int data;
+    Node left, right, parent;
+    boolean red;
+
+    public Node(int data) {
+        this.data = data;
+        this.red = true; // New nodes are always red
+    }
+}
+
+public class RedBlackTree {
+    private Node root;
+
+    // Utility method for left rotation
+    private void rotateLeft(Node node) {
+        Node rightChild = node.right;
+        node.right = rightChild.left;
+        if (rightChild.left != null) rightChild.left.parent = node;
+        rightChild.parent = node.parent;
+        if (node.parent == null) root = rightChild;
+        else if (node == node.parent.left) node.parent.left = rightChild;
+        else node.parent.right = rightChild;
+        rightChild.left = node;
+        node.parent = rightChild;
+    }
+
+    // Utility method for right rotation
+    private void rotateRight(Node node) {
+        Node leftChild = node.left;
+        node.left = leftChild.right;
+        if (leftChild.right != null) leftChild.right.parent = node;
+        leftChild.parent = node.parent;
+        if (node.parent == null) root = leftChild;
+        else if (node == node.parent.right) node.parent.right = leftChild;
+        else node.parent.left = leftChild;
+        leftChild.right = node;
+        node.parent = leftChild;
+    }
+
+    // Fixing the tree after insertion
+    private void fixInsert(Node node) {
+        Node parent, grandParent;
+        while (node != root && node.parent.red && node.red) {
+            parent = node.parent;
+            grandParent = parent.parent;
+            if (parent == grandParent.left) {
+                Node uncle = grandParent.right;
+                if (uncle != null && uncle.red) { // Case 1
+                    grandParent.red = true;
+                    parent.red = false;
+                    uncle.red = false;
+                    node = grandParent;
+                } else {
+                    if (node == parent.right) { // Case 2
+                        rotateLeft(parent);
+                        node = parent;
+                        parent = node.parent;
+                    }
+                    // Case 3
+                    rotateRight(grandParent);
+                    boolean temp = parent.red;
+                    parent.red = grandParent.red;
+                    grandParent.red = temp;
+                    node = parent;
+                }
+            } else {
+                Node uncle = grandParent.left;
+                if (uncle != null && uncle.red) { // Case 1
+                    grandParent.red = true;
+                    parent.red = false;
+                    uncle.red = false;
+                    node = grandParent;
+                } else {
+                    if (node == parent.left) { // Case 2
+                        rotateRight(parent);
+                        node = parent;
+                        parent = node.parent;
+                    }
+                    // Case 3
+                    rotateLeft(grandParent);
+                    boolean temp = parent.red;
+                    parent.red = grandParent.red;
+                    grandParent.red = temp;
+                    node = parent;
+                }
+            }
+        }
+        root.red = false;
+    }
+
+    // Inserting a node
+    public void insert(int data) {
+        Node node = new Node(data);
+        if (root == null) {
+            root = node;
+            root.red = false; // Make root black
+            return;
+        }
+        Node current = root;
+        Node parent = null;
+        while (current != null) {
+            parent = current;
+            if (node.data < current.data) current = current.left;
+            else if (node.data > current.data) current = current.right;
+            else return; // Duplicate values not allowed
+        }
+        node.parent = parent;
+        if (node.data < parent.data) parent.left = node;
+        else parent.right = node;
+        fixInsert(node);
+    }
+
+    // Pre-order traversal
+    public void preOrder(Node node) {
+        if (node != null) {
+            System.out.print(node.data + " ");
+            preOrder(node.left);
+            preOrder(node.right);
+        }
+    }
+
+    // Method to call preOrder
+    public void traverse() {
+        preOrder(root);
+    }
+}
+******************************
+-----------------------------------------------------------------------------
+AVL Tree Implementation in Java:
+*****************
+class TreeNode {
+    int key, height;
+    TreeNode left, right;
+
+    TreeNode(int d) {
+        key = d;
+        height = 1;
+    }
+}
+
+class AVLTree {
+    TreeNode root;
+
+    int height(TreeNode N) {
+        if (N == null)
+            return 0;
+        return N.height;
+    }
+
+    int max(int a, int b) {
+        return (a > b) ? a : b;
+    }
+
+    TreeNode rightRotate(TreeNode y) {
+        TreeNode x = y.left;
+        TreeNode T2 = x.right;
+        x.right = y;
+        y.left = T2;
+        y.height = max(height(y.left), height(y.right)) + 1;
+        x.height = max(height(x.left), height(x.right)) + 1;
+        return x;
+    }
+
+    TreeNode leftRotate(TreeNode x) {
+        TreeNode y = x.right;
+        TreeNode T2 = y.left;
+        y.left = x;
+        x.right = T2;
+        x.height = max(height(x.left), height(x.right)) + 1;
+        y.height = max(height(y.left), height(y.right)) + 1;
+        return y;
+    }
+
+    int getBalance(TreeNode N) {
+        if (N == null)
+            return 0;
+        return height(N.left) - height(N.right);
+    }
+
+    TreeNode insert(TreeNode node, int key) {
+        if (node == null)
+            return (new TreeNode(key));
+        if (key < node.key)
+            node.left = insert(node.left, key);
+        else if (key > node.key)
+            node.right = insert(node.right, key);
+        else 
+            return node;
+
+        node.height = 1 + max(height(node.left), height(node.right));
+        int balance = getBalance(node);
+
+        // Left Left Case
+        if (balance > 1 && key < node.left.key)
+            return rightRotate(node);
+
+        // Right Right Case
+        if (balance < -1 && key > node.right.key)
+            return leftRotate(node);
+
+        // Left Right Case
+        if (balance > 1 && key > node.left.key) {
+            node.left = leftRotate(node.left);
+            return rightRotate(node);
+        }
+
+        // Right Left Case
+        if (balance < -1 && key < node.right.key) {
+            node.right = rightRotate(node.right);
+            return leftRotate(node);
+        }
+
+        return node;
+    }
+
+    TreeNode minValueNode(TreeNode node) {
+        TreeNode current = node;
+        while (current.left != null)
+            current = current.left;
+        return current;
+    }
+
+    TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null)
+            return root;
+        if (key < root.key)
+            root.left = deleteNode(root.left, key);
+        else if (key > root.key)
+            root.right = deleteNode(root.right, key);
+        else {
+            if ((root.left == null) || (root.right == null)) {
+                TreeNode temp = null;
+                if (temp == root.left)
+                    temp = root.right;
+                else
+                    temp = root.left;
+                if (temp == null) {
+                    temp = root;
+                    root = null;
+                } else
+                    root = temp;
+            } else {
+                TreeNode temp = minValueNode(root.right);
+                root.key = temp.key;
+                root.right = deleteNode(root.right, temp.key);
+            }
+        }
+
+        if (root == null)
+            return root;
+
+        root.height = max(height(root.left), height(root.right)) + 1;
+        int balance = getBalance(root);
+
+        // Left Left Case
+        if (balance > 1 && getBalance(root.left) >= 0)
+            return rightRotate(root);
+
+        // Left Right Case
+        if (balance > 1 && getBalance(root.left) < 0) {
+            root.left = leftRotate(root.left);
+            return rightRotate(root);
+        }
+
+        // Right Right Case
+        if (balance < -1 && getBalance(root.right) <= 0)
+            return leftRotate(root);
+
+        // Right Left Case
+        if (balance < -1 && getBalance(root.right) > 0) {
+            root.right = rightRotate(root.right);
+            return leftRotate(root);
+        }
+
+        return root;
+    }
+
+    void preOrder(TreeNode node) {
+        if (node != null) {
+            System.out.print(node.key + " ");
+            preOrder(node.left);
+            preOrder(node.right);
+        }
+    }
+
+    // Main method to test the above functions
+    public static void main(String[] args) {
+        AVLTree tree = new AVLTree();
+
+        tree.root = tree.insert(tree.root
+***************************
+-------------------------------------------------------------------------------------
+Comparison of AVL Trees and Red-Black Trees:
+-----
+AVL Trees and Red-Black Trees are both self-balancing binary search trees. 
+These data structures are fundamental in computer science for maintaining sorted data in dynamic environments, allowing for efficient insertion, deletion, and lookup operations. 
+Despite serving similar purposes, they have different balancing strategies and performance characteristics.
+
+** Real-World Applications:
+AVL Trees are preferred in scenarios where lookup operations are more frequent than insertions and deletions, such as database index maintenance where fast search is crucial.
+Red-Black Trees are used in environments where the cost of re-balancing is critical, and insertions and deletions are as common as lookups. 
+Examples include the implementation of associative arrays in the C++ Standard Template Library (STL) and the Java TreeMap and TreeSet classes.
+
+*** Conclusion: 
+Both AVL Trees and Red-Black Trees offer unique advantages and come with their own set of trade-offs. 
+The choice between using an AVL Tree or a Red-Black Tree largely depends on the application's specific requirements, 
+such as the frequency of insertions/deletions versus lookups, and the need for balancing speed versus lookup efficiency.
+
+
