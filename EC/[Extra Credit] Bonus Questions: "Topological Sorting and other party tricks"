@@ -1,1 +1,158 @@
+Implement Topological Sort using Kahn's algorithm, BFS and DFS.
+-----------------------
+1. Kahn’s Algorithm:
+**************************
+import java.util.*;
+
+public class KahnsAlgorithm {
+    public static List<Integer> topologicalSort(int vertices, int[][] edges) {
+        int[] inDegree = new int[vertices];
+        List<List<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < vertices; i++) {
+            graph.add(new ArrayList<>());
+        }
+        for (int[] edge : edges) {
+            graph.get(edge[0]).add(edge[1]);
+            inDegree[edge[1]]++;
+        }
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < vertices; i++) {
+            if (inDegree[i] == 0) {
+                queue.add(i);
+            }
+        }
+        List<Integer> order = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+            order.add(current);
+            for (int neighbor : graph.get(current)) {
+                inDegree[neighbor]--;
+                if (inDegree[neighbor] == 0) {
+                    queue.add(neighbor);
+                }
+            }
+        }
+        if (order.size() == vertices) {
+            return order;
+        } else {
+            return null; // Graph has a cycle
+        }
+    }
+}
+***************************
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+2. DFS Topological Sort:
+**************************
+import java.util.*;
+
+public class DFSTopologicalSort {
+    public static List<Integer> topologicalSort(int vertices, List<List<Integer>> graph) {
+        boolean[] visited = new boolean[vertices];
+        List<Integer> order = new ArrayList<>();
+        for (int i = 0; i < vertices; i++) {
+            if (!visited[i]) {
+                dfs(i, graph, visited, order);
+            }
+        }
+        Collections.reverse(order);
+        return order;
+    }
+
+    private static void dfs(int vertex, List<List<Integer>> graph, boolean[] visited, List<Integer> order) {
+        visited[vertex] = true;
+        for (int neighbor : graph.get(vertex)) {
+            if (!visited[neighbor]) {
+                dfs(neighbor, graph, visited, order);
+            }
+        }
+        order.add(vertex);
+    }
+}
+*********************
+
+---------------------------------------------------------
+---------------------------------------------------------
+
+3. BFS Topological Sort:
+***********************
+import java.util.*;
+
+public class BFSTopologicalSort {
+    public static List<Integer> topologicalSort(int vertices, List<List<Integer>> adjList) {
+        int[] inDegree = new int[vertices];
+        for (int i = 0; i < vertices; i++) {
+            for (int node : adjList.get(i)) {
+                inDegree[node]++;
+            }
+        }
+
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < vertices; i++) {
+            if (inDegree[i] == 0) {
+                queue.add(i);
+            }
+        }
+
+        List<Integer> result = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+            result.add(current);
+
+            for (int node : adjList.get(current)) {
+                inDegree[node]--;
+                if (inDegree[node] == 0) {
+                    queue.add(node);
+                }
+            }
+        }
+
+        if (result.size() != vertices) {
+            throw new IllegalArgumentException("The graph has a cycle!");
+        }
+
+        return result;
+    }
+********************************
+
+Here’s a sample input for a graph and how the three approaches—Kahn’s algorithm, BFS, and DFS—would topologically sort it:
+
+*Graph Representation:
+
+A --> B --> C
+|           ^
+|           |
++----> D ---+
+
+**Kahn’s Algorithm:
+1. Initialize a list to keep the sorted elements.
+2. Compute the in-degree for each vertex.
+3. Collect vertices with zero in-degree in a queue.
+4. While the queue is not empty:
+    -Remove a vertex from the queue and add it to the sorted list.
+    -Decrease the in-degree of its neighbors.
+    -If a neighbor’s in-degree drops to zero, add it to the queue.
+5. If the sorted list contains all vertices, a topological order is found.
+------------
+**BFS (Breadth-First Search):
+1. Similar to Kahn’s algorithm, use a queue to process vertices with zero in-degree.
+2. Traverse the graph level by level, adding vertices to the sorted list as their in-degree becomes zero.
+
+-------------
+
+**DFS (Depth-First Search):
+1. Perform a DFS from each vertex not yet visited.
+2. On visiting a vertex, recursively call DFS for its unvisited neighbors.
+3. After visiting all neighbors, push the vertex onto a stack.
+4. The stack will contain the topologically sorted order when the DFS is complete.
+---------------
+
+***Sample Output:
+ - Kahn’s Algorithm: A, D, B, C
+ - BFS: A, D, B, C
+ - DFS: A, B, D, C (Note: DFS may yield different results depending on the order of vertices visited)
+
+******************************************
+
+
 
