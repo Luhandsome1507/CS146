@@ -1,0 +1,108 @@
+In Java: 
+***************
+
+public class CourseSchedule {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        List<List<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++) {
+            graph.add(new ArrayList<>());
+        }
+        
+        int[] inDegree = new int[numCourses];
+        
+        for (int[] pair : prerequisites) {
+            graph.get(pair[1]).add(pair[0]);
+            inDegree[pair[0]]++;
+        }
+        
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < numCourses; i++) {
+            if (inDegree[i] == 0) {
+                queue.add(i);
+            }
+        }
+        
+        int count = 0;
+        
+        while (!queue.isEmpty()) {
+            int course = queue.poll();
+            count++;
+            for (int neighbor : graph.get(course)) {
+                inDegree[neighbor]--;
+                // If in-degree becomes zero, add to queue
+                if (inDegree[neighbor] == 0) {
+                    queue.add(neighbor);
+                }
+            }
+        }
+        
+        return count == numCourses;
+    }
+    
+    // Example usage
+    public static void main(String[] args) {
+        CourseSchedule schedule = new CourseSchedule();
+        int numCourses = 2;
+        int[][] prerequisites = {{1, 0}};
+        System.out.println(schedule.canFinish(numCourses, prerequisites)); 
+    }
+}
+
+
+***************
+---------------------------------------
+---------------------------------------
+
+In Python: 
+****************
+
+def canFinish(numCourses, prerequisites):
+    graph = {i: [] for i in range(numCourses)}
+    in_degree = {i: 0 for i in range(numCourses)}
+
+    for dest, src in prerequisites:
+        graph[src].append(dest)
+        in_degree[dest] += 1
+
+    queue = [i for i in range(numCourses) if in_degree[i] == 0]
+
+    count = 0
+
+    while queue:
+        course = queue.pop(0)
+        count += 1
+        for neighbor in graph[course]:
+            in_degree[neighbor] -= 1
+            if in_degree[neighbor] == 0:
+                queue.append(neighbor)
+
+    return count == numCourses
+
+# Example test case
+numCourses = 2
+prerequisites = [[1, 0]]
+print(canFinish(numCourses, prerequisites)) 
+
+*****************
+
+----------------------------------------------------
+----------------------------------------------------
+
+# Course Scheduling Problem
+
+## Problem Statement
+Given a number of courses and a list of prerequisite pairs, determine if it's possible for a student to finish all courses. 
+This problem is a classic example of detecting a cycle in a directed graph.
+
+## Approach
+The solution to this problem involves the following high-level steps:
+
+### 1. Graph Representation
+### 2. In-degree Calculation
+### 3. Topological Sorting
+### 4. Cycle Detection
+
+## Conclusion
+The use of topological sorting in this problem is key to detecting cycles in the graph. 
+If a cycle is detected, it means that there are courses that cannot be completed due to circular dependencies in prerequisites.
+
