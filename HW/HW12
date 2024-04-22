@@ -1,0 +1,124 @@
+In Java: 
+*****************
+import java.util.*;
+
+public class Main {
+    public int minCostToSupplyWater(int n, int[] wells, int[][] pipes) {
+        List<int[]> edges = new ArrayList<>();
+        for (int i = 0; i < wells.length; i++) {
+            edges.add(new int[]{0, i + 1, wells[i]});
+        }
+        for (int[] pipe : pipes) {
+            edges.add(pipe);
+        }
+        Collections.sort(edges, (a, b) -> a[2] - b[2]);
+
+        int[] parent = new int[n + 1];
+        for (int i = 0; i <= n; i++) {
+            parent[i] = i;
+        }
+
+        int totalCost = 0;
+        for (int[] edge : edges) {
+            int house1 = edge[0];
+            int house2 = edge[1];
+            int cost = edge[2];
+
+            if (find(parent, house1) != find(parent, house2)) {
+                totalCost += cost;
+                union(parent, find(parent, house1), find(parent, house2));
+            }
+        }
+        return totalCost;
+    }
+
+    private int find(int[] parent, int f) {
+        if (f != parent[f]) {
+            parent[f] = find(parent, parent[f]);
+        }
+        return parent[f];
+    }
+
+    private void union(int[] parent, int x, int y) {
+        parent[find(parent, x)] = find(parent, y);
+    }
+
+    public static void main(String[] args) {
+        Main solution = new Main();
+        int n = 2;
+        int[] wells = {1, 1};
+        int[][] pipes = {{1, 2, 1}, {1, 2, 2}};
+        System.out.println("The minimum cost to supply water is: " + solution.minCostToSupplyWater(n, wells, pipes));
+    }
+}
+*******************
+-------------------------------------------------------
+
+In Python:
+******************
+
+class UnionFind:
+    def __init__(self, size):
+        self.parent = list(range(size))
+
+    def find(self, p):
+        if self.parent[p] != p:
+            self.parent[p] = self.find(self.parent[p])
+        return self.parent[p]
+
+    def union(self, p, q):
+        rootP = self.find(p)
+        rootQ = self.find(q)
+        if rootP != rootQ:
+            self.parent[rootP] = rootQ
+
+def min_cost_to_supply_water(n, wells, pipes):
+    edges = [(cost, 0, i+1) for i, cost in enumerate(wells)]
+    
+    for u, v, cost in pipes:
+        edges.append((cost, u, v))
+    
+    edges.sort()
+    
+    uf = UnionFind(n + 1)
+    
+    total_cost = 0
+    for cost, u, v in edges:
+        if uf.find(u) != uf.find(v):
+            uf.union(u, v)
+            total_cost += cost
+
+    return total_cost
+
+if __name__ == "__main__":
+    n = 2
+    wells = [1, 1]
+    pipes = [(1, 2, 1), (1, 2, 2)]
+    print("The minimum cost to supply water is:", min_cost_to_supply_water(n, wells, pipes))
+
+*******************
+---------------------------------------------------------
+
+Follow-up question: Now that you've solved the problem with one approach, can you think of how to solve it using another approach?
+****
+Another way to approach this problem is by using Prim's algorithm, which is another classic minimum spanning tree (MST) algorithm. 
+While Kruskal's algorithm works well by adding edges in order of their weights, Prim's algorithm grows the MST by adding the cheapest edge from a growing set of vertices.
+
+---------------------------------------------------------
+
+# Minimum Cost to Supply Water
+## Kruskal's Algorithm
+
+Kruskal's algorithm is a classic minimum spanning tree (MST) approach suited for this problem. The steps are as follows:
+
+### Steps:
+1. **Representation**: Start by representing the problem as a graph where each house is a node. Connect a virtual node (node 0) to each house with an edge weighted by the cost of digging a well at that house.
+2. **Edge List**: Add all given pipes (connections between houses) to the edge list, including the virtual node edges.
+3. **Sort**: Sort all edges in the graph by their weight (cost).
+4. **Union-Find**: Initialize a union-find structure to manage connected components.
+5. **Process Edges**: For each edge in the sorted list, if the two houses (nodes) at the ends of the edge are not already connected, add this edge to the MST and unite the two houses in the union-find structure.
+6. **Cost Calculation**: Sum the weights of the edges added to the MST. This sum represents the minimum cost to supply water to all houses.
+
+#### Conclusion:
+Both Kruskal's and Prim's algorithms efficiently find the minimum spanning tree, which in this context translates to the minimum cost to connect all houses either directly or indirectly to a water source. 
+The choice between the two algorithms depends on specific problem constraints and implementation preferences.
