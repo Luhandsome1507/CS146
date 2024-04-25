@@ -1,0 +1,67 @@
+In Python: 
+***************
+from typing import List
+
+def coinChange(coins: List[int], amount: int) -> int:
+    dp = [amount + 1] * (amount + 1)
+    dp[0] = 0  
+    for a in range(1, amount + 1):
+        for c in coins:
+            if c <= a:
+                dp[a] = min(dp[a], dp[a - c] + 1)
+    
+    return dp[amount] if dp[amount] != amount + 1 else -1
+
+# Test cases
+print(coinChange([1, 2, 5], 11))  # Output: 3
+print(coinChange([2], 3))         # Output: -1
+print(coinChange([1], 0))         # Output: 0
+*******************
+
+-------------------------------------------------------
+
+In Java: 
+******************
+public class Lab9 {
+  public int coinChange(int[] coins, int amount) {
+    int[] dp = new int[amount + 1];
+    java.util.Arrays.fill(dp, amount + 1);
+    dp[0] = 0; 
+    for (int a = 1; a <= amount; a++) {
+      for (int c : coins) {
+        if (c <= a) {
+          dp[a] = Math.min(dp[a], dp[a - c] + 1);
+        }
+      }
+    }
+    return dp[amount] > amount ? -1 : dp[amount];
+  }
+
+  public static void main(String[] args) {
+    Lab9 solution = new Lab9();
+    // Test cases
+    System.out.println(solution.coinChange(new int[]{1, 2, 5}, 11)); // Output: 3
+    System.out.println(solution.coinChange(new int[]{2}, 3));        // Output: -1
+    System.out.println(solution.coinChange(new int[]{1}, 0));        // Output: 0
+  }
+}
+*********************
+-------------------------------------------------------
+
+
+# Coin Change Problem Solution Approach
+
+## Dynamic Programming
+
+### Overview
+The coin change problem is solved using a dynamic programming approach, which is an optimization over plain recursion. By storing the results of subproblems, the algorithm ensures that each subproblem is only solved once, thus saving computation time.
+
+### Process
+
+- **Initialize** a `dp` array to store minimum coins for amounts `0` to `amount`.
+- **Set** `dp[0]` to `0` (base case).
+- **Iterate** over amounts and coins, updating `dp` for each combination.
+- **Return** `dp[amount]` if it's less than `amount + 1`, otherwise `-1`.
+
+### Conclusion
+This method ensures the optimal solution is found for the minimum number of coins needed to make up any given amount, with a time complexity of O(n*m) where `n` is the amount and `m` is the number of coin denominations.
